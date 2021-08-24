@@ -3,5 +3,7 @@
 @section('title', 'Chat - LaraChat')
 
 @section('content')
-#lara
+<chat-component>
+
+</chat-component>
 @endsection
