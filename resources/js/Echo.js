@@ -7,8 +7,7 @@ window.Echo.join('larachat_database_chatroom')
 
         store.commit('ADD_ONLINE_USERS', users);
     })
-    .
-    joining(user => {
+    .joining(user => {
         console.log('Entrou')
         console.log(user)
 
