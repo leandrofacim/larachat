@@ -20,4 +20,18 @@ class Message extends Model
     {
         return $this->belongsTo(User::class, 'receiver_id');
     }
+
+    public function conversationWithUser(int $id)
+    {
+        return $this->where(function ($query) use ($id) {
+            $query->where('sender_id', auth()->user()->id);
+            $query->where('receiver_id', $id);
+        })
+        ->orWhere(function ($query) use ($id) {
+            $query->where('sender_id', $id);
+            $query->where('receiver_id', auth()->user()->id);
+        })
+        ->with(['sender', 'receiver'])
+        ->get();
+    }
 }

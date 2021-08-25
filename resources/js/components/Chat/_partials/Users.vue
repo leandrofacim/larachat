@@ -2,14 +2,27 @@
   <div class="chat-sidebar">
     <div class="px-8 lg:py-4 lg:px-6">
       <h3 class="text-xl font-semibold tracking-wide mt-5 hidden lg:block">
-        Conversas
+        Usuários
       </h3>
       <div class="relative my-5 text-gray-600">
         <input
           type="search"
           name="serch"
+          v-model="filter"
           placeholder="Search"
-          class="w-full bg-gray-100 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none focus:shadow-lg focus:bg-white hover:shadow-md"
+          class="
+            w-full
+            bg-gray-100
+            h-10
+            px-5
+            pr-10
+            rounded-full
+            text-sm
+            focus:outline-none
+            focus:shadow-lg
+            focus:bg-white
+            hover:shadow-md
+          "
         />
         <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
           <svg
@@ -35,7 +48,7 @@
     </div>
     <!-- users -->
     <ul class="flex flex-col chat-list">
-      <div v-for="(user, index) in allUsers" :key="index">
+      <div v-for="(user, index) in users" :key="index">
         <li
           class="bg-white hover:bg-gray-100 border-b p-4 cursor-pointer"
           :class="{ 'is-active': activeChat === index }"
@@ -49,7 +62,15 @@
               />
               <span
                 v-if="user.online"
-                class="text-green-500 absolute -bottom-0.5 -right-0.5 rounded-full bg-white border-white border-4"
+                class="
+                  text-green-500
+                  absolute
+                  -bottom-0.5
+                  -right-0.5
+                  rounded-full
+                  bg-white
+                  border-white border-4
+                "
               >
                 <svg width="10" height="10">
                   <circle cx="5" cy="5" r="5" fill="currentColor"></circle>
@@ -60,15 +81,21 @@
               <div class="font-medium mb-1 flex items-center">
                 <span class="text-gray-700 mr-3">{{ user.name }}</span>
               </div>
-              <span class="text-sm text-truncate text-muted-alt">
-                -
-              </span>
+              <span class="text-sm text-truncate text-muted-alt"> - </span>
             </div>
             <!-- <time class="absolute top-0 right-0 text-xs font-medium text-muted"
               >22/02/2024</time
             > -->
             <span
-              class="absolute bottom-0 right-0 text-xs font-medium bg-indigo-500 text-white text-circle"
+              class="
+                absolute
+                bottom-0
+                right-0
+                text-xs
+                font-medium
+                bg-indigo-500
+                text-white text-circle
+              "
               >3</span
             >
           </div>
@@ -79,11 +106,11 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
   mounted() {
-      this.getUsers()
+    this.getUsers();
   },
 
   computed: {
@@ -91,19 +118,31 @@ export default {
     //       users: state => state.users.users
     //   })
     ...mapGetters({
-        allUsers: 'sortedUsers'
-    })
+      allUsers: "sortedUsers",
+    }),
+
+    users() {
+      return this.allUsers.filter((user) => {
+        if (this.filter === "") return user;
+
+        return (
+          user.name.toLowerCase().includes(this.filter) ||
+          user.email === this.filter
+        );
+      });
+    },
   },
 
   data() {
     return {
       selected: "inbox",
       activeChat: 0,
+      filter: "",
     };
   },
 
   methods: {
-      ...mapActions(['getUsers'])
-  }
+    ...mapActions(["getUsers"]),
+  },
 };
 </script>
