@@ -1,10 +1,14 @@
 import store from './vuex/store';
+import Vue from 'vue';
 
 const userId = window.laravel.user;
 
 window.Echo.channel(`larachat_database_private-chat.${userId}`)
     .listen('NewMessageCreated', event => {
         console.log(event.message)
+        let conversation = event.message;
+
+        Vue.$vToastify.success(`Mensagem: ${conversation.message}`, `${conversation.sender.name} te enviou uma nova mensagem`)
     })
 
 window.Echo.join('larachat_database_chatroom')
