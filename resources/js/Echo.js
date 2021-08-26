@@ -1,5 +1,12 @@
 import store from './vuex/store';
 
+const userId = window.laravel.user;
+
+window.Echo.channel(`larachat_database_private-chat.${userId}`)
+    .listen('NewMessageCreated', event => {
+        console.log(event.message)
+    })
+
 window.Echo.join('larachat_database_chatroom')
     .here(users => {
         console.log('usuarios online')

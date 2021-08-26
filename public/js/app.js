@@ -2374,6 +2374,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vuex_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vuex/store */ "./resources/js/vuex/store.js");
 
+var userId = window.laravel.user;
+window.Echo.channel("larachat_database_private-chat.".concat(userId)).listen('NewMessageCreated', function (event) {
+  console.log(event.message);
+});
 window.Echo.join('larachat_database_chatroom').here(function (users) {
   console.log('usuarios online');
   console.log(users);
