@@ -34,6 +34,20 @@ export default {
 
             return await axios.get(`api/v1/messages/${state.userConversation.id}`)
                 .then(response => commit('ADD_MESSAGES', response.data.data))
+        },
+
+        async sendNewMessage({ state, commit }, message) {
+            return await axios.post('api/v1/messages', {
+                message,
+                receiver_id: state.userConversation.id
+            })
+            .then(response => {
+                commit('ADD_MESSAGE', {
+                    message: message,
+                    receiver: {...state.userConversation},
+                    me: true
+                })
+            })
         }
     },
 
