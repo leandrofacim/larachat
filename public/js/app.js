@@ -2142,7 +2142,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     messages: function messages(state) {
       return state.chat.messages;
     }
-  }))
+  })),
+  methods: {
+    scrollMessages: function scrollMessages() {
+      var _this = this;
+
+      setTimeout(function () {
+        _this.$refs.messages.scroll({
+          top: _this.$refs.messages.scrollHeight,
+          lef: 0,
+          behavior: 'smooth'
+        });
+      }, 10);
+    }
+  },
+  watch: {
+    messages: function messages() {
+      this.scrollMessages();
+    }
+  }
 });
 
 /***/ }),
@@ -2380,9 +2398,10 @@ var userId = window.laravel.user;
 window.Echo.channel("larachat_database_private-chat.".concat(userId)).listen('NewMessageCreated', function (event) {
   console.log(event.message);
   var conversation = event.message;
-  vue__WEBPACK_IMPORTED_MODULE_1__.default.$vToastify.success("Mensagem: ".concat(conversation.message), "".concat(conversation.sender.name, " te enviou uma nova mensagem"));
 
-  if (_vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.userConversation !== null && _vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.userConversation.id === conversation.sender.id) {
+  if (_vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.userConversation == null || _vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.userConversation.id != conversation.sender.id) {
+    vue__WEBPACK_IMPORTED_MODULE_1__.default.$vToastify.success("Mensagem: ".concat(conversation.message), "".concat(conversation.sender.name, " te enviou uma nova mensagem"));
+  } else {
     conversation.me = false;
     _vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.messages.push(conversation);
   }
@@ -50666,45 +50685,49 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "chat-window__messages-wrapper" }, [
-            _c("div", { staticClass: "chat-window__messages-inner" }, [
-              _c(
-                "div",
-                { staticClass: "chat-messages" },
-                _vm._l(_vm.messages, function(message, index) {
-                  return _c(
-                    "div",
-                    {
-                      key: index,
-                      class: [message.me ? "my-message" : "his-message"]
-                    },
-                    [
-                      _c("div", { staticClass: "inner" }, [
-                        !message.me
-                          ? _c("div", { staticClass: "profile" }, [
-                              _c("img", {
-                                staticClass: "w-10 h-10 rounded-full",
-                                attrs: {
-                                  src: [
-                                    message.sender.photo !== ""
-                                      ? message.sender.photo
-                                      : "/images/no-photo.png"
-                                  ],
-                                  alt: message.sender.name
-                                }
-                              })
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ballon-text" }, [
-                          _c("div", [_vm._v(_vm._s(message.message))])
+            _c(
+              "div",
+              { ref: "messages", staticClass: "chat-window__messages-inner" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "chat-messages" },
+                  _vm._l(_vm.messages, function(message, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: index,
+                        class: [message.me ? "my-message" : "his-message"]
+                      },
+                      [
+                        _c("div", { staticClass: "inner" }, [
+                          !message.me
+                            ? _c("div", { staticClass: "profile" }, [
+                                _c("img", {
+                                  staticClass: "w-10 h-10 rounded-full",
+                                  attrs: {
+                                    src: [
+                                      message.sender.photo !== ""
+                                        ? message.sender.photo
+                                        : "/images/no-photo.png"
+                                    ],
+                                    alt: message.sender.name
+                                  }
+                                })
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ballon-text" }, [
+                            _c("div", [_vm._v(_vm._s(message.message))])
+                          ])
                         ])
-                      ])
-                    ]
-                  )
-                }),
-                0
-              )
-            ]),
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "chat-input w-full px-4 mb-4" }, [
               _c(

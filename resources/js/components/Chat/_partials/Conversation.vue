@@ -64,7 +64,7 @@
       </div>
       <div class="chat-window__messages-wrapper">
         <!-- chat msgs  -->
-        <div class="chat-window__messages-inner">
+        <div class="chat-window__messages-inner" ref="messages">
           <div class="chat-messages">
             <div 
               v-for="(message, index) in messages" 
@@ -157,5 +157,23 @@ export default {
             messages: state => state.chat.messages,
         })
     },
+
+    methods: {
+      scrollMessages () {
+        setTimeout(() => {
+          this.$refs.messages.scroll({
+            top: this.$refs.messages.scrollHeight,
+            lef: 0,
+            behavior: 'smooth'
+          })
+        }, 10)
+      }
+    },
+
+    watch: {
+      messages () {
+        this.scrollMessages()
+      }
+    }
 };
 </script>
