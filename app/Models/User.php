@@ -46,4 +46,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(self::class, 'favorites', 'user_id', 'favorite_user_id');
+    }
+
+    public function favorite()
+    {
+        return $this->belongsToMany(self::class, 'favorites', 'favorite_user_id', 'user_id')
+            ->where('user_id', auth()->user()->id);
+    }
+
+    public function allUsers()
+    {
+        return $this->inRandomOrder()
+            ->where('id', '!=', auth()->user()->id)
+            ->with(['favorite'])
+            ->get();
+    }
 }
