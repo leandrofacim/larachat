@@ -11,7 +11,6 @@
 
 <script>
 import Sidebar from "./_partials/Sidebar";
-
 export default {
   components: {
     Sidebar,

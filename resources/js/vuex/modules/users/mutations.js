@@ -15,13 +15,21 @@ export default {
     state.onlineUsers = state.onlineUsers.filter(u => u.email !== user.email)
   },
 
-  SET_USER_FAVORITE(state, favoriteUser) {
+  SET_USER_FAVORITE(state, userM) {
     state.users.data = state.users.data.map((user, index) => {
-      if (user.email === favoriteUser.email) {
-        user.isMyFavorite = true;
+      if (user.email === userM.email)
+        user.isMyFavorite = true
 
-        return user;
-      }
-    });
-  }
+      return user
+    })
+  },
+
+  REMOVE_USER_FAVORITE(state, userM) {
+    state.users.data = state.users.data.map((user, index) => {
+      if (user.email === userM.email)
+        user.isMyFavorite = false
+
+      return user
+    })
+  },
 }

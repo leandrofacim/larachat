@@ -19,5 +19,5 @@ Route::prefix('v1')
 
         Route::get('favorites', [FavoriteApiController::class, 'myFavorites']);
         Route::post('favorites', [FavoriteApiController::class, 'store']);
-        Route::delete('favorites/delete', [FavoriteApiController::class, 'destroy']);
+        Route::delete('favorites', [FavoriteApiController::class, 'destroy']);
     });

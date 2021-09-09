@@ -13,7 +13,7 @@ import Conversation from '../components/Chat/Conversation';
 
 export default {
   mounted() {
-    if (this.allUsers.length === 0)
+    // if (this.allUsers.length === 0)
     this.getUsers();
   },
   

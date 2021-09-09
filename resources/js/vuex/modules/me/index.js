@@ -12,16 +12,34 @@ export default {
   },
 
   actions: {
-    async getMyFavorites({ commit }) {
-      const response = await axios.get('/api/v1/favorites');
-      return commit('SET_MY_FAVORITES', response.data.data);
+    getMyFavorites({ commit }) {
+      return axios.get('/api/v1/favorites')
+        .then(response => commit('SET_MY_FAVORITES', response.data.data));
     },
 
-    async setNewFavorite({ commit, dispatch, state }, user) {
-      const response = await axios.post('/api/v1/favorites', { user: user.id });
-      commit('SET_USER_FAVORITE', user);
-      if (state.favorites.length > 0)
-        dispatch('getMyFavorites');
-    }
+    setNewFavorite({ commit, dispatch, state }, user) {
+      return axios.post('/api/v1/favorites', { user: user.id })
+        .then(response => {
+          commit('SET_USER_FAVORITE', user)
+
+          if (state.favorites.length > 0)
+            dispatch('getMyFavorites')
+        });
+    },
+
+    removeFavorite({ commit, dispatch, state }, user) {
+      return axios.delete('/api/v1/favorites', {
+        data: {
+          user: user.id
+        }
+      })
+        .then(response => {
+          commit('REMOVE_USER_FAVORITE', user)
+
+          if (state.favorites.length > 0)
+            dispatch('getMyFavorites')
+        })
+    },
+
   }
 }
