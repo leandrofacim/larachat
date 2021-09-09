@@ -18,6 +18,6 @@ Route::prefix('v1')
         Route::get('messages/{id}', [ChatApiController::class, 'messagesWithUser']);
 
         Route::get('favorites', [FavoriteApiController::class, 'myFavorites']);
-        Route::post('favorites/create', [FavoriteApiController::class, 'store']);
+        Route::post('favorites', [FavoriteApiController::class, 'store']);
         Route::delete('favorites/delete', [FavoriteApiController::class, 'destroy']);
     });
