@@ -14,7 +14,6 @@ const router = new VueRouter({
         { path: '/profile', component: Profile, name: 'profile' },
     ],
     linkExactActiveClass: 'is-active',
-    mode: 'history'
 });
 
 export default router;

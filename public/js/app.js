@@ -2095,6 +2095,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -2363,6 +2364,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2410,8 +2437,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Chat_Users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Chat/Users */ "./resources/js/components/Chat/Users.vue");
 /* harmony import */ var _components_Chat_Conversation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Chat/Conversation */ "./resources/js/components/Chat/Conversation.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2424,16 +2458,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {// this.getUsers();
+  mounted: function mounted() {
+    if (this.allUsers.length === 0) this.getMyFavorites();
   },
-  computed: {},
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)({
+    allUsers: function allUsers(state) {
+      return state.me.favorites;
+    }
+  })),
   data: function data() {
-    return {
-      allUsers: []
-    };
+    return {};
   },
-  methods: {// ...mapActions(["getUsers"]),
-  },
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)(["getMyFavorites"])),
   components: {
     Users: _components_Chat_Users__WEBPACK_IMPORTED_MODULE_0__.default,
     Conversation: _components_Chat_Conversation__WEBPACK_IMPORTED_MODULE_1__.default
@@ -2475,8 +2511,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    // if (this.allUsers.length === 0)
-    this.getUsers();
+    if (this.allUsers.length === 0) this.getUsers();
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
     allUsers: "sortedUsers"
@@ -2658,8 +2693,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__.default({
     component: _pages_Profile__WEBPACK_IMPORTED_MODULE_2__.default,
     name: 'profile'
   }],
-  linkExactActiveClass: 'is-active',
-  mode: 'history'
+  linkExactActiveClass: 'is-active'
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
@@ -2774,6 +2808,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   getters: {}
+});
+
+/***/ }),
+
+/***/ "./resources/js/vuex/modules/me/index.js":
+/*!***********************************************!*\
+  !*** ./resources/js/vuex/modules/me/index.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    favorites: []
+  },
+  mutations: {
+    SET_MY_FAVORITES: function SET_MY_FAVORITES(state, users) {
+      state.favorites = users;
+    }
+  },
+  actions: {
+    getMyFavorites: function getMyFavorites(_ref) {
+      var commit = _ref.commit;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/favorites').then(function (response) {
+        return commit('SET_MY_FAVORITES', response.data.data);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2952,19 +3021,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/users */ "./resources/js/vuex/modules/users/index.js");
 /* harmony import */ var _modules_chat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/chat */ "./resources/js/vuex/modules/chat/index.js");
+/* harmony import */ var _modules_me__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/me */ "./resources/js/vuex/modules/me/index.js");
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vuex__WEBPACK_IMPORTED_MODULE_4__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_4__.default.Store({
   modules: {
     users: _modules_users__WEBPACK_IMPORTED_MODULE_0__.default,
-    chat: _modules_chat__WEBPACK_IMPORTED_MODULE_1__.default
+    chat: _modules_chat__WEBPACK_IMPORTED_MODULE_1__.default,
+    me: _modules_me__WEBPACK_IMPORTED_MODULE_2__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -51044,6 +51116,11 @@ var render = function() {
                       "svg",
                       {
                         staticClass: "h-6 w-6",
+                        class: {
+                          "fill-current text-red-600":
+                            _vm.userConversation !== null &&
+                            _vm.userConversation.isMyFavorite
+                        },
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           fill: "none",
