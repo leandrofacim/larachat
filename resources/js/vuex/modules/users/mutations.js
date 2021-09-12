@@ -32,4 +32,13 @@ export default {
       return user
     })
   },
+
+  CLEAR_TOTAL_UNREAD_MESSAGES(state, id) {
+    state.users.data = state.users.data.map((user, index) => {
+      if (user.id === id)
+        user.unreadMessages = 0;
+
+      return user;
+    });
+  }
 }

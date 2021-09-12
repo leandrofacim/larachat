@@ -29,11 +29,14 @@ export default {
   },
 
   actions: {
-    getMessagesConversation({ state, commit }) {
+    getMessagesConversation({ state, commit, dispatch }) {
       commit('CLEAR_MESSAGES');
 
       return axios.get(`api/v1/messages/${state.userConversation.id}`)
-        .then(response => commit('ADD_MESSAGES', response.data.data))
+        .then(response => {
+            commit('ADD_MESSAGES', response.data.data)
+            dispatch('markConversationAsRead')
+        });
     },
 
     sendNewMessage({ state, commit }, message) {
@@ -48,6 +51,13 @@ export default {
             me: true
           })
         })
+    },
+
+    markConversationAsRead ({commit, state }) {
+        return axios.patch('/api/v1/messages/mark_as_read', {sender: state.userConversation.id})
+            .then(response => {
+                commit('CLEAR_TOTAL_UNREAD_MESSAGES', state.userConversation.id)
+            })
     }
   },
 

@@ -2269,6 +2269,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2299,7 +2306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapMutations)({
-    addUserChat: 'ADD_USER_CONVERSATION'
+    addUserChat: "ADD_USER_CONVERSATION"
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["getMessagesConversation"])), {}, {
     openChatWithUser: function openChatWithUser(user) {
       this.activeChat = user.id;
@@ -2739,10 +2746,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   actions: {
     getMessagesConversation: function getMessagesConversation(_ref) {
       var state = _ref.state,
-          commit = _ref.commit;
+          commit = _ref.commit,
+          dispatch = _ref.dispatch;
       commit('CLEAR_MESSAGES');
       return axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/v1/messages/".concat(state.userConversation.id)).then(function (response) {
-        return commit('ADD_MESSAGES', response.data.data);
+        commit('ADD_MESSAGES', response.data.data);
+        dispatch('markConversationAsRead');
       });
     },
     sendNewMessage: function sendNewMessage(_ref2, message) {
@@ -2757,6 +2766,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           receiver: _objectSpread({}, state.userConversation),
           me: true
         });
+      });
+    },
+    markConversationAsRead: function markConversationAsRead(_ref3) {
+      var commit = _ref3.commit,
+          state = _ref3.state;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().patch('/api/v1/messages/mark_as_read', {
+        sender: state.userConversation.id
+      }).then(function (response) {
+        commit('CLEAR_TOTAL_UNREAD_MESSAGES', state.userConversation.id);
       });
     }
   },
@@ -2946,6 +2964,12 @@ __webpack_require__.r(__webpack_exports__);
   REMOVE_USER_FAVORITE: function REMOVE_USER_FAVORITE(state, userM) {
     state.users.data = state.users.data.map(function (user, index) {
       if (user.email === userM.email) user.isMyFavorite = false;
+      return user;
+    });
+  },
+  CLEAR_TOTAL_UNREAD_MESSAGES: function CLEAR_TOTAL_UNREAD_MESSAGES(state, id) {
+    state.users.data = state.users.data.map(function (user, index) {
+      if (user.id === id) user.unreadMessages = 0;
       return user;
     });
   }
@@ -50711,10 +50735,24 @@ var render = function() {
                 _c(
                   "span",
                   {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: user.unreadMessages > 0,
+                        expression: "user.unreadMessages > 0"
+                      }
+                    ],
                     staticClass:
                       "\n              absolute\n              bottom-0\n              right-0\n              text-xs\n              font-medium\n              bg-indigo-500\n              text-white text-circle\n            "
                   },
-                  [_vm._v("3")]
+                  [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(user.unreadMessages) +
+                        "\n          "
+                    )
+                  ]
                 )
               ])
             ]

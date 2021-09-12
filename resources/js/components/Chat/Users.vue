@@ -50,9 +50,14 @@
     <ul class="flex flex-col chat-list">
       <div v-for="(user, index) in users" :key="index">
         <li
-        @click.prevent="openChatWithUser(user)"
-          :class="['hover:bg-gray-100', 'border-b', 'p-4', 'cursor-pointer',
-           activeChat === user.id ? 'is-active' : 'bg-white']"
+          @click.prevent="openChatWithUser(user)"
+          :class="[
+            'hover:bg-gray-100',
+            'border-b',
+            'p-4',
+            'cursor-pointer',
+            activeChat === user.id ? 'is-active' : 'bg-white',
+          ]"
         >
           <div class="flex items-center relative">
             <div class="relative">
@@ -97,8 +102,10 @@
                 bg-indigo-500
                 text-white text-circle
               "
-              >3</span
+              v-show="user.unreadMessages > 0"
             >
+              {{ user.unreadMessages }}
+            </span>
           </div>
         </li>
       </div>
@@ -117,8 +124,8 @@ export default {
     },
     title: {
       require: true,
-      type: String
-    }
+      type: String,
+    },
   },
 
   computed: {
@@ -143,19 +150,19 @@ export default {
   },
 
   methods: {
-      ...mapMutations({
-          addUserChat: 'ADD_USER_CONVERSATION'
-      }),
+    ...mapMutations({
+      addUserChat: "ADD_USER_CONVERSATION",
+    }),
 
     ...mapActions(["getMessagesConversation"]),
 
     openChatWithUser(user) {
-        this.activeChat = user.id;
+      this.activeChat = user.id;
 
-        this.addUserChat(user);
+      this.addUserChat(user);
 
-        this.getMessagesConversation();
-    }
+      this.getMessagesConversation();
+    },
   },
 };
 </script>
