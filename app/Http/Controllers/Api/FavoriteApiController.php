@@ -25,7 +25,7 @@ class FavoriteApiController extends Controller
             $request->user()->favorites->pluck('id')->push($request->user)
         );
 
-        return response()->json(['message' => 'success'], 201);
+        return response()->json(['message' => 'success'], 201);  
     }
 
     public function destroy(StoreFavoriteRequest $request)

@@ -20,7 +20,9 @@ window.Echo.channel(`larachat_database_private-chat.${userId}`)
             conversation.me = false;
             store.state.chat.messages.push(conversation)
         }
-        
+
+        store.commit('UPDATE_TOTAL_UNREAD_MESSAGES', conversation.sender.id)
+
     })
 
 window.Echo.join('larachat_database_chatroom')

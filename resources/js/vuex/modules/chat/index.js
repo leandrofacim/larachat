@@ -29,35 +29,29 @@ export default {
   },
 
   actions: {
-    getMessagesConversation({ state, commit, dispatch }) {
+    async getMessagesConversation({ state, commit, dispatch }) {
       commit('CLEAR_MESSAGES');
 
-      return axios.get(`api/v1/messages/${state.userConversation.id}`)
-        .then(response => {
-            commit('ADD_MESSAGES', response.data.data)
-            dispatch('markConversationAsRead')
-        });
+      const response = await axios.get(`api/v1/messages/${state.userConversation.id}`);
+          commit('ADD_MESSAGES', response.data.data);
+          dispatch('markConversationAsRead');
     },
 
-    sendNewMessage({ state, commit }, message) {
-      return axios.post('api/v1/messages', {
-        message,
-        receiver_id: state.userConversation.id
-      })
-        .then(response => {
-          commit('ADD_MESSAGE', {
+    async sendNewMessage({ state, commit }, message) {
+      const response = await axios.post('api/v1/messages', {
+            message,
+            receiver_id: state.userConversation.id
+        });
+        commit('ADD_MESSAGE', {
             message: message,
             receiver: { ...state.userConversation },
             me: true
-          })
-        })
+        });
     },
 
-    markConversationAsRead ({commit, state }) {
-        return axios.patch('/api/v1/messages/mark_as_read', {sender: state.userConversation.id})
-            .then(response => {
-                commit('CLEAR_TOTAL_UNREAD_MESSAGES', state.userConversation.id)
-            })
+    async markConversationAsRead ({commit, state }) {
+        const response = await axios.patch('/api/v1/messages/mark_as_read', { sender: state.userConversation.id });
+        commit('CLEAR_TOTAL_UNREAD_MESSAGES', state.userConversation.id);
     }
   },
 
