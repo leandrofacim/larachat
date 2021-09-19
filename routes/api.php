@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ChatApiController;
 use App\Http\Controllers\Api\FavoriteApiController;
+use App\Http\Controllers\Api\ProfileApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,13 @@ Route::get('/', function () {
 Route::prefix('v1')
     ->middleware(['auth:web'])
     ->group(function () {
+        Route::get('me', [ProfileApiController::class, 'me']);
+        Route::post('logout', [ProfileApiController::class, 'logout']);
+        
+        Route::patch('profile/update-image', [ProfileApiController::class, 'updatePhoto']);
+        Route::patch('profile/update-image-chat', [ProfileApiController::class, 'uploadImageChat']);
+        Route::put('profile/update', [ProfileApiController::class, 'update']);
+
         Route::get('users', [UserApiController::class, 'index']);
 
         Route::post('messages', [ChatApiController::class, 'store']);
