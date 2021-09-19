@@ -2555,6 +2555,201 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2630,6 +2825,7 @@ var app = new Vue({
   store: _vuex_store__WEBPACK_IMPORTED_MODULE_1__.default,
   router: _routes__WEBPACK_IMPORTED_MODULE_2__.default
 });
+_vuex_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('getMe');
 
 /***/ }),
 
@@ -2862,22 +3058,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
-    favorites: []
+    favorites: [],
+    me: {
+      name: '',
+      email: '',
+      photo: '',
+      preference: {
+        me_notify: true,
+        background_chat: ''
+      }
+    }
   },
   mutations: {
     SET_MY_FAVORITES: function SET_MY_FAVORITES(state, users) {
       state.favorites = users;
+    },
+    SET_ME: function SET_ME(state, me) {
+      state.me = me;
     }
   },
   actions: {
     getMyFavorites: function getMyFavorites(_ref) {
       var commit = _ref.commit;
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/favorites').then(function (response) {
+      return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/favorites').then(function (response) {
         return commit('SET_MY_FAVORITES', response.data.data);
       });
     },
@@ -2885,7 +3101,7 @@ __webpack_require__.r(__webpack_exports__);
       var commit = _ref2.commit,
           dispatch = _ref2.dispatch,
           state = _ref2.state;
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/favorites', {
+      return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/favorites', {
         user: user.id
       }).then(function (response) {
         commit('SET_USER_FAVORITE', user);
@@ -2896,7 +3112,7 @@ __webpack_require__.r(__webpack_exports__);
       var commit = _ref3.commit,
           dispatch = _ref3.dispatch,
           state = _ref3.state;
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().delete('/api/v1/favorites', {
+      return axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/favorites', {
         data: {
           user: user.id
         }
@@ -2904,6 +3120,29 @@ __webpack_require__.r(__webpack_exports__);
         commit('REMOVE_USER_FAVORITE', user);
         if (state.favorites.length > 0) dispatch('getMyFavorites');
       });
+    },
+    getMe: function getMe(_ref4) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref4.commit;
+                _context.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/v1/me');
+
+              case 3:
+                response = _context.sent;
+                return _context.abrupt("return", commit('SET_ME', response.data.data));
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -51859,11 +52098,200 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "chat-container relative" }, [
-    _vm._v("\n    #profile\n")
+  return _c("div", { staticClass: "md:grid md:grid-cols-1 md:gap-6 p-8" }, [
+    _c(
+      "div",
+      { staticClass: "bg-white p-8 shadow sm:rounded-md sm:overflow-hidden" },
+      [
+        _c(
+          "span",
+          {
+            staticClass:
+              "inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100"
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "h-full w-full text-gray-300",
+                attrs: { fill: "currentColor", viewBox: "0 0 24 24" }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d:
+                      "M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                  }
+                })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "inline-block" }, [
+      _c("input", { staticClass: "p-6", attrs: { type: "file" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "bg-white shadow sm:rounded-md sm:overflow-hidden" },
+      [
+        _c("div", { staticClass: "p-6" }, [
+          _c("div", { staticClass: "col-span-6 sm:col-span-4 py-2" }, [
+            _c(
+              "label",
+              {
+                staticClass: "block text-sm font-medium text-gray-700",
+                attrs: { for: "nome" }
+              },
+              [_vm._v("Nome")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass:
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+              attrs: {
+                type: "text",
+                name: "email_address",
+                id: "email_address",
+                autocomplete: "email"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-span-6 sm:col-span-4 py-2" }, [
+            _c(
+              "label",
+              {
+                staticClass: "block text-sm font-medium text-gray-700",
+                attrs: { for: "email_address" }
+              },
+              [_vm._v("E-mail")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass:
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+              attrs: {
+                type: "text",
+                name: "email_address",
+                id: "email_address",
+                autocomplete: "email",
+                disabled: ""
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "px-4 py-3 bg-gray-50 text-right sm:px-6" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("\n        Atualizar\n      ")]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "bg-white shadow sm:rounded-md sm:overflow-hidden" },
+      [
+        _c("div", { staticClass: "p-6" }, [
+          _c("div", { staticClass: "col-span-6 sm:col-span-4 py-2" }, [
+            _c("label", { attrs: { for: "notifications" } }, [
+              _c("input", {
+                staticClass:
+                  "\n              px-3\n              py-2\n              placeholder-gray-300\n              border border-gray-300\n              rounded-md\n              focus:outline-none\n              focus:ring focus:ring-indigo-100\n              focus:border-indigo-300\n              dark:bg-gray-700\n              dark:text-white\n              dark:placeholder-gray-500\n              dark:border-gray-600\n              dark:focus:ring-gray-900\n              dark:focus:border-gray-500\n            ",
+                attrs: {
+                  type: "checkbox",
+                  name: "email_address",
+                  id: "email_address",
+                  autocomplete: "email"
+                }
+              }),
+              _vm._v("\n          Receber Notificações?\n        ")
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "bg-white shadow sm:rounded-md sm:overflow-hidden" },
+      [
+        _c("div", { staticClass: "p-6" }, [
+          _c("div", { staticClass: "col-span-6 sm:col-span-4 py-2" }, [
+            _c(
+              "label",
+              {
+                staticClass: "block text-sm font-medium text-gray-700",
+                attrs: { for: "email_address" }
+              },
+              [_vm._v("Atualizar Background")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass:
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+              attrs: {
+                type: "file",
+                name: "email_address",
+                id: "email_address",
+                autocomplete: "email"
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "px-4 py-3 bg-gray-50 text-right sm:px-6" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("\n        Atualizar Preferências\n      ")]
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
