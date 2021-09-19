@@ -16,9 +16,11 @@ Route::prefix('v1')
     ->group(function () {
         Route::get('me', [ProfileApiController::class, 'me']);
         Route::post('logout', [ProfileApiController::class, 'logout']);
-        
+
+        Route::patch('profile/update-image-chat', [ProfileApiController::class, 'updatePreferenceImageChat']);
+        Route::patch('profile/update-preference', [ProfileApiController::class, 'updatePreference']);
         Route::patch('profile/update-image', [ProfileApiController::class, 'updatePhoto']);
-        Route::patch('profile/update-image-chat', [ProfileApiController::class, 'uploadImageChat']);
+        Route::patch('profile/update-image-chat', [ProfileApiController::class, 'updateImageChat']);
         Route::put('profile/update', [ProfileApiController::class, 'update']);
 
         Route::get('users', [UserApiController::class, 'index']);

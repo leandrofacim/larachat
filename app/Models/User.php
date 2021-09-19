@@ -66,11 +66,16 @@ class User extends Authenticatable
             ->where('receiver_id', auth()->user()->id);
     }
 
+    public function preference()
+    {
+        return $this->hasOne(UserPreference::class);
+    }
+
     public function allUsers()
     {
         return $this->inRandomOrder()
             ->where('id', '!=', auth()->user()->id)
-            ->with(['favorite', 'unreadMessages'])
+            ->with(['favorite', 'unreadMessages', 'preference'])
             ->get();
     }
 }
