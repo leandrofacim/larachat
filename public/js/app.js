@@ -2549,6 +2549,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2750,7 +2757,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
+    me: function me(state) {
+      return state.me.me;
+    }
+  })),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['updatePhotoProfile'])), {}, {
+    updatePhoto: function updatePhoto(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (files.length === 0) return;
+      var formData = new FormData();
+      formData.append('image', files[0]);
+      this.updatePhotoProfile(formData);
+    }
+  })
+});
 
 /***/ }),
 
@@ -3069,6 +3097,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+var CONFIGS = {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
     favorites: [],
@@ -3142,6 +3175,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    updatePhotoProfile: function updatePhotoProfile(_ref5, formData) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                dispatch = _ref5.dispatch;
+                formData.append('_method', 'PATCH');
+                return _context2.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().post('api/v1/profile/update-image', formData, CONFIGS).then(function (response) {
+                  return dispatch('getMe');
+                }));
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -52103,51 +52157,56 @@ var render = function() {
       "div",
       { staticClass: "bg-white p-8 shadow sm:rounded-md sm:overflow-hidden" },
       [
-        _c(
-          "span",
-          {
-            staticClass:
-              "inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100"
-          },
-          [
-            _c(
-              "svg",
+        _vm.me.photo === ""
+          ? _c(
+              "span",
               {
-                staticClass: "h-full w-full text-gray-300",
-                attrs: { fill: "currentColor", viewBox: "0 0 24 24" }
+                staticClass:
+                  "inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100"
               },
               [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
-                  }
-                })
+                _c(
+                  "svg",
+                  {
+                    staticClass: "h-full w-full text-gray-300",
+                    attrs: { fill: "currentColor", viewBox: "0 0 24 24" }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                      }
+                    })
+                  ]
+                )
               ]
             )
-          ]
-        ),
+          : _c("div", { staticClass: "inline-block" }, [
+              _c("img", {
+                staticClass: "h-12 w-12 rounded-full",
+                attrs: { src: _vm.me.photo, alt: _vm.me.name }
+              })
+            ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "inline-block" }, [
+          _c("input", {
+            staticClass: "p-6",
+            attrs: { type: "file" },
+            on: { change: _vm.updatePhoto }
+          })
+        ])
       ]
     ),
     _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _vm._m(3)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "inline-block" }, [
-      _c("input", { staticClass: "p-6", attrs: { type: "file" } })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

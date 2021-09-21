@@ -2,6 +2,7 @@
   <div class="md:grid md:grid-cols-1 md:gap-6 p-8">
     <div class="bg-white p-8 shadow sm:rounded-md sm:overflow-hidden">
       <span
+        v-if="me.photo === ''"
         class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100"
       >
         <svg
@@ -15,8 +16,12 @@
         </svg>
       </span>
 
+      <div v-else class="inline-block">
+          <img :src="me.photo" :alt="me.name" class="h-12 w-12 rounded-full">
+      </div>
+
       <div class="inline-block">
-        <input type="file" class="p-6" />
+        <input type="file" class="p-6" @change="updatePhoto" />
       </div>
     </div>
 
@@ -200,7 +205,29 @@
 </template>
 
 <script>
-export default {
+import { mapState, mapActions } from 'vuex';
 
+export default {
+    computed: {
+        ...mapState({
+            me: (state) => state.me.me
+        })
+    },
+
+    methods: {
+        ...mapActions(['updatePhotoProfile']),
+
+        updatePhoto(e) {
+            let files = e.target.files || e.dataTransfer.files
+
+            if (files.length === 0) return;
+
+            const formData = new FormData();
+
+            formData.append('image', files[0]);
+
+            this.updatePhotoProfile(formData);
+        }
+    }
 };
 </script>
