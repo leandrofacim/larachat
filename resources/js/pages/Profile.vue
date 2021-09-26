@@ -17,7 +17,7 @@
       </span>
 
       <div v-else class="inline-block">
-          <img :src="me.photo" :alt="me.name" class="h-12 w-12 rounded-full">
+        <img :src="me.photo" :alt="me.name" class="h-12 w-12 rounded-full" />
       </div>
 
       <div class="inline-block">
@@ -32,9 +32,10 @@
             >Nome</label
           >
           <input
+            v-model="me.name"
             type="text"
-            name="email_address"
-            id="email_address"
+            name="name"
+            id="name"
             autocomplete="email"
             class="
               w-full
@@ -62,9 +63,10 @@
             >E-mail</label
           >
           <input
+            v-model="me.email"
             type="text"
-            name="email_address"
-            id="email_address"
+            name="email"
+            id="email"
             autocomplete="email"
             class="
               w-full
@@ -89,6 +91,7 @@
       </div>
       <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
         <button
+          @click.prevent="updateProfile"
           type="submit"
           class="
             inline-flex
@@ -205,29 +208,33 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
 export default {
-    computed: {
-        ...mapState({
-            me: (state) => state.me.me
-        })
+  computed: {
+    ...mapState({
+      me: (state) => state.me.me,
+    }),
+  },
+
+  methods: {
+    ...mapActions(['updatePhotoProfile', 'update']),
+
+    updatePhoto(e) {
+      let files = e.target.files || e.dataTransfer.files;
+
+      if (files.length === 0) return;
+
+      const formData = new FormData();
+
+      formData.append("image", files[0]);
+
+      this.updatePhotoProfile(formData);
     },
 
-    methods: {
-        ...mapActions(['updatePhotoProfile']),
-
-        updatePhoto(e) {
-            let files = e.target.files || e.dataTransfer.files
-
-            if (files.length === 0) return;
-
-            const formData = new FormData();
-
-            formData.append('image', files[0]);
-
-            this.updatePhotoProfile(formData);
-        }
+    updateProfile() {
+      this.update({name: this.me.name})
     }
+  },
 };
 </script>

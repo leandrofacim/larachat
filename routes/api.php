@@ -21,7 +21,7 @@ Route::prefix('v1')
         Route::patch('profile/update-preference', [ProfileApiController::class, 'updatePreference']);
         Route::patch('profile/update-image', [ProfileApiController::class, 'uploadPhoto']);
         Route::patch('profile/update-image-chat', [ProfileApiController::class, 'updateImageChat']);
-        Route::put('profile/update', [ProfileApiController::class, 'update']);
+        Route::patch('profile/update', [ProfileApiController::class, 'update']);
 
         Route::get('users', [UserApiController::class, 'index']);
 

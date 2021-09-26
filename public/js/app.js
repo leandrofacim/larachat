@@ -2762,6 +2762,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -2769,13 +2772,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.me.me;
     }
   })),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['updatePhotoProfile'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['updatePhotoProfile', 'update'])), {}, {
     updatePhoto: function updatePhoto(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (files.length === 0) return;
       var formData = new FormData();
-      formData.append('image', files[0]);
+      formData.append("image", files[0]);
       this.updatePhotoProfile(formData);
+    },
+    updateProfile: function updateProfile() {
+      this.update({
+        name: this.me.name
+      });
     }
   })
 });
@@ -3090,6 +3098,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3196,6 +3210,30 @@ var CONFIGS = {
             }
           }
         }, _callee2);
+      }))();
+    },
+    update: function update(_ref6, formData) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                dispatch = _ref6.dispatch;
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch('api/v1/profile/update', _objectSpread({}, formData)).then(function (response) {
+                  return dispatch('getMe');
+                });
+
+              case 3:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -52199,19 +52237,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _vm._m(2)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
+    _c(
       "div",
       { staticClass: "bg-white shadow sm:rounded-md sm:overflow-hidden" },
       [
@@ -52227,13 +52253,30 @@ var staticRenderFns = [
             ),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.me.name,
+                  expression: "me.name"
+                }
+              ],
               staticClass:
                 "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "text",
-                name: "email_address",
-                id: "email_address",
+                name: "name",
+                id: "name",
                 autocomplete: "email"
+              },
+              domProps: { value: _vm.me.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.me, "name", $event.target.value)
+                }
               }
             })
           ]),
@@ -52249,14 +52292,31 @@ var staticRenderFns = [
             ),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.me.email,
+                  expression: "me.email"
+                }
+              ],
               staticClass:
                 "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "text",
-                name: "email_address",
-                id: "email_address",
+                name: "email",
+                id: "email",
                 autocomplete: "email",
                 disabled: ""
+              },
+              domProps: { value: _vm.me.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.me, "email", $event.target.value)
+                }
               }
             })
           ])
@@ -52268,14 +52328,26 @@ var staticRenderFns = [
             {
               staticClass:
                 "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
-              attrs: { type: "submit" }
+              attrs: { type: "submit" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateProfile.apply(null, arguments)
+                }
+              }
             },
             [_vm._v("\n        Atualizar\n      ")]
           )
         ])
       ]
-    )
-  },
+    ),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
+}
+var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
