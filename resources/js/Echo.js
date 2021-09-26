@@ -12,6 +12,8 @@ window.Echo.channel(`larachat_database_private-chat.${userId}`)
             store.state.chat.userConversation == null ||
             store.state.chat.userConversation.id != conversation.sender.id
         ) {
+            if (!store.state.me.me.preference.me_notify) return;
+
             Vue.$vToastify.success(
                 `Mensagem: ${conversation.message}`,
                 `${conversation.sender.name} te enviou uma nova mensagem`

@@ -120,9 +120,11 @@
         <div class="col-span-6 sm:col-span-4 py-2">
           <label for="notifications">
             <input
+              @change="toogleNotify"
+              v-model="me.preference.me_notify"
               type="checkbox"
-              name="email_address"
-              id="email_address"
+              name="me_notify"
+              id="me_notify"
               autocomplete="email"
               class="
                 px-3
@@ -218,7 +220,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updatePhotoProfile', 'update']),
+    ...mapActions(["updatePhotoProfile", "update", "toogleNotify"]),
 
     updatePhoto(e) {
       let files = e.target.files || e.dataTransfer.files;
@@ -233,8 +235,8 @@ export default {
     },
 
     updateProfile() {
-      this.update({name: this.me.name})
-    }
+      this.update({ name: this.me.name });
+    },
   },
 };
 </script>

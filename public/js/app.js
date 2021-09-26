@@ -2765,6 +2765,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -2772,7 +2774,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.me.me;
     }
   })),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['updatePhotoProfile', 'update'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["updatePhotoProfile", "update", "toogleNotify"])), {}, {
     updatePhoto: function updatePhoto(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (files.length === 0) return;
@@ -2808,6 +2810,7 @@ window.Echo.channel("larachat_database_private-chat.".concat(userId)).listen('Ne
   var conversation = event.message;
 
   if (_vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.userConversation == null || _vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.chat.userConversation.id != conversation.sender.id) {
+    if (!_vuex_store__WEBPACK_IMPORTED_MODULE_0__.default.state.me.me.preference.me_notify) return;
     vue__WEBPACK_IMPORTED_MODULE_1__.default.$vToastify.success("Mensagem: ".concat(conversation.message), "".concat(conversation.sender.name, " te enviou uma nova mensagem"));
   } else {
     conversation.me = false;
@@ -3234,6 +3237,26 @@ var CONFIGS = {
             }
           }
         }, _callee3);
+      }))();
+    },
+    toogleNotify: function toogleNotify(_ref7) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var dispatch, state;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                dispatch = _ref7.dispatch, state = _ref7.state;
+                return _context4.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().patch('api/v1/profile/update-preference', {
+                  me_notify: state.me.preference.me_notify
+                }));
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }
@@ -52342,17 +52365,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
+    _c(
       "div",
       { staticClass: "bg-white shadow sm:rounded-md sm:overflow-hidden" },
       [
@@ -52360,13 +52373,57 @@ var staticRenderFns = [
           _c("div", { staticClass: "col-span-6 sm:col-span-4 py-2" }, [
             _c("label", { attrs: { for: "notifications" } }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.me.preference.me_notify,
+                    expression: "me.preference.me_notify"
+                  }
+                ],
                 staticClass:
                   "\n              px-3\n              py-2\n              placeholder-gray-300\n              border border-gray-300\n              rounded-md\n              focus:outline-none\n              focus:ring focus:ring-indigo-100\n              focus:border-indigo-300\n              dark:bg-gray-700\n              dark:text-white\n              dark:placeholder-gray-500\n              dark:border-gray-600\n              dark:focus:ring-gray-900\n              dark:focus:border-gray-500\n            ",
                 attrs: {
                   type: "checkbox",
-                  name: "email_address",
-                  id: "email_address",
+                  name: "me_notify",
+                  id: "me_notify",
                   autocomplete: "email"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.me.preference.me_notify)
+                    ? _vm._i(_vm.me.preference.me_notify, null) > -1
+                    : _vm.me.preference.me_notify
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.me.preference.me_notify,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.me.preference,
+                              "me_notify",
+                              $$a.concat([$$v])
+                            )
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.me.preference,
+                              "me_notify",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.me.preference, "me_notify", $$c)
+                      }
+                    },
+                    _vm.toogleNotify
+                  ]
                 }
               }),
               _vm._v("\n          Receber Notificações?\n        ")
@@ -52374,8 +52431,12 @@ var staticRenderFns = [
           ])
         ])
       ]
-    )
-  },
+    ),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
+}
+var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
