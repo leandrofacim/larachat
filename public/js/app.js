@@ -2767,6 +2767,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -3116,19 +3122,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var CONFIGS = {
   headers: {
-    'Content-Type': 'multipart/form-data'
+    "Content-Type": "multipart/form-data"
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
     favorites: [],
     me: {
-      name: '',
-      email: '',
-      photo: '',
+      name: "",
+      email: "",
+      photo: "",
       preference: {
         me_notify: true,
-        background_chat: ''
+        background_chat: ""
       }
     }
   },
@@ -3143,32 +3149,32 @@ var CONFIGS = {
   actions: {
     getMyFavorites: function getMyFavorites(_ref) {
       var commit = _ref.commit;
-      return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/favorites').then(function (response) {
-        return commit('SET_MY_FAVORITES', response.data.data);
+      return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/favorites").then(function (response) {
+        return commit("SET_MY_FAVORITES", response.data.data);
       });
     },
     setNewFavorite: function setNewFavorite(_ref2, user) {
       var commit = _ref2.commit,
           dispatch = _ref2.dispatch,
           state = _ref2.state;
-      return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/favorites', {
+      return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/v1/favorites", {
         user: user.id
       }).then(function (response) {
-        commit('SET_USER_FAVORITE', user);
-        if (state.favorites.length > 0) dispatch('getMyFavorites');
+        commit("SET_USER_FAVORITE", user);
+        if (state.favorites.length > 0) dispatch("getMyFavorites");
       });
     },
     removeFavorite: function removeFavorite(_ref3, user) {
       var commit = _ref3.commit,
           dispatch = _ref3.dispatch,
           state = _ref3.state;
-      return axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/favorites', {
+      return axios__WEBPACK_IMPORTED_MODULE_1___default().delete("/api/v1/favorites", {
         data: {
           user: user.id
         }
       }).then(function (response) {
-        commit('REMOVE_USER_FAVORITE', user);
-        if (state.favorites.length > 0) dispatch('getMyFavorites');
+        commit("REMOVE_USER_FAVORITE", user);
+        if (state.favorites.length > 0) dispatch("getMyFavorites");
       });
     },
     getMe: function getMe(_ref4) {
@@ -3180,11 +3186,11 @@ var CONFIGS = {
               case 0:
                 commit = _ref4.commit;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/v1/me');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/v1/me");
 
               case 3:
                 response = _context.sent;
-                return _context.abrupt("return", commit('SET_ME', response.data.data));
+                return _context.abrupt("return", commit("SET_ME", response.data.data));
 
               case 5:
               case "end":
@@ -3202,9 +3208,9 @@ var CONFIGS = {
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref5.dispatch;
-                formData.append('_method', 'PATCH');
-                return _context2.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().post('api/v1/profile/update-image', formData, CONFIGS).then(function (response) {
-                  return dispatch('getMe');
+                formData.append("_method", "PATCH");
+                return _context2.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image", formData, CONFIGS).then(function (response) {
+                  return dispatch("getMe");
                 }));
 
               case 3:
@@ -3224,8 +3230,8 @@ var CONFIGS = {
               case 0:
                 dispatch = _ref6.dispatch;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch('api/v1/profile/update', _objectSpread({}, formData)).then(function (response) {
-                  return dispatch('getMe');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update", _objectSpread({}, formData)).then(function (response) {
+                  return dispatch("getMe");
                 });
 
               case 3:
@@ -3247,7 +3253,7 @@ var CONFIGS = {
             switch (_context4.prev = _context4.next) {
               case 0:
                 dispatch = _ref7.dispatch, state = _ref7.state;
-                return _context4.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().patch('api/v1/profile/update-preference', {
+                return _context4.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update-preference", {
                   me_notify: state.me.preference.me_notify
                 }));
 
@@ -3281,8 +3287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getUsers: function getUsers(_ref) {
     var commit = _ref.commit;
-    return axios__WEBPACK_IMPORTED_MODULE_0___default().get('api/v1/users').then(function (response) {
-      return commit('ADD_ALL_USERS', response.data);
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/v1/users").then(function (response) {
+      return commit("ADD_ALL_USERS", response.data);
     });
   }
 });
@@ -52285,7 +52291,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                "\n          w-full\n          px-3\n          py-2\n          placeholder-gray-300\n          border border-gray-300\n          rounded-md\n          focus:outline-none\n          focus:ring focus:ring-indigo-100\n          focus:border-indigo-300\n          dark:bg-gray-700\n          dark:text-white\n          dark:placeholder-gray-500\n          dark:border-gray-600\n          dark:focus:ring-gray-900\n          dark:focus:border-gray-500\n        ",
               attrs: {
                 type: "text",
                 name: "name",
@@ -52324,7 +52330,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                "\n          w-full\n          px-3\n          py-2\n          placeholder-gray-300\n          border border-gray-300\n          rounded-md\n          focus:outline-none\n          focus:ring focus:ring-indigo-100\n          focus:border-indigo-300\n          dark:bg-gray-700\n          dark:text-white\n          dark:placeholder-gray-500\n          dark:border-gray-600\n          dark:focus:ring-gray-900\n          dark:focus:border-gray-500\n        ",
               attrs: {
                 type: "text",
                 name: "email",
@@ -52350,7 +52356,7 @@ var render = function() {
             "button",
             {
               staticClass:
-                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
+                "\n        inline-flex\n        justify-center\n        py-2\n        px-4\n        border border-transparent\n        shadow-sm\n        text-sm\n        font-medium\n        rounded-md\n        text-white\n        bg-indigo-600\n        hover:bg-indigo-700\n        focus:outline-none\n        focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n      ",
               attrs: { type: "submit" },
               on: {
                 click: function($event) {
@@ -52359,7 +52365,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n        Atualizar\n      ")]
+            [_vm._v("\n                Atualizar\n            ")]
           )
         ])
       ]
@@ -52382,7 +52388,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "\n              px-3\n              py-2\n              placeholder-gray-300\n              border border-gray-300\n              rounded-md\n              focus:outline-none\n              focus:ring focus:ring-indigo-100\n              focus:border-indigo-300\n              dark:bg-gray-700\n              dark:text-white\n              dark:placeholder-gray-500\n              dark:border-gray-600\n              dark:focus:ring-gray-900\n              dark:focus:border-gray-500\n            ",
+                  "\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
                 attrs: {
                   type: "checkbox",
                   name: "me_notify",
@@ -52426,7 +52432,9 @@ var render = function() {
                   ]
                 }
               }),
-              _vm._v("\n          Receber Notificações?\n        ")
+              _vm._v(
+                "\n                    Receber Notificações?\n                "
+              )
             ])
           ])
         ])
@@ -52458,7 +52466,7 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("input", {
               staticClass:
-                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                "\n          w-full\n          px-3\n          py-2\n          placeholder-gray-300\n          border border-gray-300\n          rounded-md\n          focus:outline-none\n          focus:ring focus:ring-indigo-100\n          focus:border-indigo-300\n          dark:bg-gray-700\n          dark:text-white\n          dark:placeholder-gray-500\n          dark:border-gray-600\n          dark:focus:ring-gray-900\n          dark:focus:border-gray-500\n        ",
               attrs: {
                 type: "file",
                 name: "email_address",
@@ -52474,10 +52482,10 @@ var staticRenderFns = [
             "button",
             {
               staticClass:
-                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
+                "\n        inline-flex\n        justify-center\n        py-2\n        px-4\n        border border-transparent\n        shadow-sm\n        text-sm\n        font-medium\n        rounded-md\n        text-white\n        bg-indigo-600\n        hover:bg-indigo-700\n        focus:outline-none\n        focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n      ",
               attrs: { type: "submit" }
             },
-            [_vm._v("\n        Atualizar Preferências\n      ")]
+            [_vm._v("\n                Atualizar Preferências\n            ")]
           )
         ])
       ]

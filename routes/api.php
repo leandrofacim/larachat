@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\ChatApiController;
 use App\Http\Controllers\Api\FavoriteApiController;
 use App\Http\Controllers\Api\ProfileApiController;
 use App\Http\Controllers\Api\UserApiController;
-use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
