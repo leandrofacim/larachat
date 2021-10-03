@@ -24,7 +24,7 @@ class UpdatePhotoRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => ['image', 'required', 'max:1024']
+            'image' => ['image', 'required']
         ];
     }
 }

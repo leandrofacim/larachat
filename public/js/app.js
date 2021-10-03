@@ -2097,6 +2097,85 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -2105,6 +2184,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     messages: function messages(state) {
       return state.chat.messages;
+    },
+    me: function me(state) {
+      return state.me.me;
     }
   })), {}, {
     disableButton: function disableButton() {
@@ -2113,11 +2195,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   data: function data() {
     return {
-      message: '',
+      message: "",
       sendingMessage: false
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['sendNewMessage', 'setNewFavorite', 'removeFavorite'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["sendNewMessage", "setNewFavorite", "removeFavorite"])), {}, {
     scrollMessages: function scrollMessages() {
       var _this = this;
 
@@ -2125,7 +2207,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$refs.messages.scroll({
           top: _this.$refs.messages.scrollHeight,
           lef: 0,
-          behavior: 'smooth'
+          behavior: "smooth"
         });
       }, 10);
     },
@@ -2135,7 +2217,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.disableButton) return;
       this.sendingMessage = true;
       this.sendNewMessage(this.message).then(function (response) {
-        _this2.message = '';
+        _this2.message = "";
       })["finally"](function () {
         return _this2.sendingMessage = false;
       });
@@ -2745,34 +2827,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -2780,7 +2834,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.me.me;
     }
   })),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["updatePhotoProfile", "update", "toogleNotify"])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["updatePhotoProfile", "update", "toogleNotify", "updateImageChat"])), {}, {
     updatePhoto: function updatePhoto(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (files.length === 0) return;
@@ -2792,6 +2846,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.update({
         name: this.me.name
       });
+    },
+    updateBackgroundChat: function updateBackgroundChat(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      console.log(files);
+      if (files.length === 0) return;
+      var formData = new FormData();
+      formData.append("image", files[0]);
+      this.updateImageChat(formData);
     }
   })
 });
@@ -3209,11 +3271,15 @@ var CONFIGS = {
               case 0:
                 dispatch = _ref5.dispatch;
                 formData.append("_method", "PATCH");
-                return _context2.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image", formData, CONFIGS).then(function (response) {
+                _context2.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image", formData, CONFIGS).then(function (response) {
                   return dispatch("getMe");
-                }));
+                });
 
-              case 3:
+              case 4:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -3253,16 +3319,45 @@ var CONFIGS = {
             switch (_context4.prev = _context4.next) {
               case 0:
                 dispatch = _ref7.dispatch, state = _ref7.state;
-                return _context4.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update-preference", {
+                _context4.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update-preference", {
                   me_notify: state.me.preference.me_notify
-                }));
+                });
 
-              case 2:
+              case 3:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 4:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4);
+      }))();
+    },
+    updateImageChat: function updateImageChat(_ref8, formData) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                dispatch = _ref8.dispatch;
+                formData.append("_method", "PATCH");
+                _context5.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image-chat", formData, CONFIGS).then(function (response) {
+                  return dispatch('getMe');
+                });
+
+              case 4:
+                return _context5.abrupt("return", _context5.sent);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -51460,7 +51555,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "chat-window__header bg-white px-6 py-2 h-20 flex md:items-center justify-between border-b-2 border-gray-200"
+                "\n        chat-window__header\n        bg-white\n        px-6\n        py-2\n        h-20\n        flex\n        md:items-center\n        justify-between\n        border-b-2 border-gray-200\n      "
             },
             [
               _c("div", { staticClass: "flex items-center space-x-4" }, [
@@ -51468,7 +51563,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "cursor-pointer lg:pointer-events-none rounded-full flex items-center hover:bg-gray-100 pl-2"
+                      "\n            cursor-pointer\n            lg:pointer-events-none\n            rounded-full\n            flex\n            items-center\n            hover:bg-gray-100\n            pl-2\n          "
                   },
                   [
                     _c("span", { staticClass: "lg:hidden text-gray-500" }, [
@@ -51529,7 +51624,7 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none",
+                      "\n            inline-flex\n            items-center\n            justify-center\n            rounded-full\n            h-10\n            w-10\n            transition\n            duration-500\n            ease-in-out\n            text-gray-500\n            hover:bg-gray-300\n            focus:outline-none\n          ",
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
@@ -51573,160 +51668,86 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "chat-window__messages-wrapper" }, [
-            _c(
-              "div",
-              { ref: "messages", staticClass: "chat-window__messages-inner" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "chat-messages" },
-                  _vm._l(_vm.messages, function(message, index) {
-                    return _c(
-                      "div",
-                      {
-                        key: index,
-                        class: [message.me ? "my-message" : "his-message"]
-                      },
-                      [
-                        _c("div", { staticClass: "inner" }, [
-                          !message.me
-                            ? _c("div", { staticClass: "profile" }, [
-                                _c("img", {
-                                  staticClass: "w-10 h-10 rounded-full",
-                                  attrs: {
-                                    src: [
-                                      message.sender.photo !== ""
-                                        ? message.sender.photo
-                                        : "/images/no-photo.png"
-                                    ],
-                                    alt: message.sender.name
-                                  }
-                                })
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ballon-text" }, [
-                            _c("div", [_vm._v(_vm._s(message.message))])
-                          ])
-                        ])
-                      ]
-                    )
-                  }),
-                  0
-                )
+          _c(
+            "div",
+            {
+              staticClass: "chat-window__messages-wrapper",
+              style: [
+                _vm.me.preference.image_background_chat
+                  ? {
+                      background:
+                        "center / 100% no-repeat url(" +
+                        _vm.me.preference.image_background_chat +
+                        ")"
+                    }
+                  : ""
               ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "chat-input w-full px-4 mb-4" }, [
+            },
+            [
               _c(
                 "div",
-                {
-                  staticClass:
-                    "flex flex-row items-center h-16 rounded-xl px-4 bg-white"
-                },
+                { ref: "messages", staticClass: "chat-window__messages-inner" },
                 [
-                  _c("div", [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "flex items-center justify-center text-gray-400 hover:text-gray-600"
-                      },
-                      [
-                        _c(
-                          "svg",
-                          {
-                            staticClass: "w-5 h-5",
-                            attrs: {
-                              fill: "none",
-                              stroke: "currentColor",
-                              viewBox: "0 0 24 24",
-                              xmlns: "http://www.w3.org/2000/svg"
-                            }
-                          },
-                          [
-                            _c("path", {
-                              attrs: {
-                                "stroke-linecap": "round",
-                                "stroke-linejoin": "round",
-                                "stroke-width": "2",
-                                d:
-                                  "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "flex-grow ml-4" }, [
-                    _c("div", { staticClass: "relative w-full" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.message,
-                            expression: "message"
-                          }
-                        ],
-                        staticClass:
-                          "flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.message },
-                        on: {
-                          keyup: function($event) {
-                            if (
-                              !$event.type.indexOf("key") &&
-                              _vm._k(
-                                $event.keyCode,
-                                "enter",
-                                13,
-                                $event.key,
-                                "Enter"
-                              )
-                            ) {
-                              return null
-                            }
-                            return _vm.sendMessage.apply(null, arguments)
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.message = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "ml-4" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0",
-                        attrs: { disabled: _vm.disableButton, type: "submit" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sendMessage.apply(null, arguments)
-                          }
-                        }
-                      },
-                      [
-                        _vm.sendingMessage
-                          ? _c("span", [_vm._v("Enviando...")])
-                          : _c("span", [_vm._v("Enviar")]),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "ml-2" }, [
+                  _c(
+                    "div",
+                    { staticClass: "chat-messages" },
+                    _vm._l(_vm.messages, function(message, index) {
+                      return _c(
+                        "div",
+                        {
+                          key: index,
+                          class: [message.me ? "my-message" : "his-message"]
+                        },
+                        [
+                          _c("div", { staticClass: "inner" }, [
+                            !message.me
+                              ? _c("div", { staticClass: "profile" }, [
+                                  _c("img", {
+                                    staticClass: "w-10 h-10 rounded-full",
+                                    attrs: {
+                                      src: [
+                                        message.sender.photo !== ""
+                                          ? message.sender.photo
+                                          : "/images/no-photo.png"
+                                      ],
+                                      alt: message.sender.name
+                                    }
+                                  })
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "ballon-text" }, [
+                              _c("div", [_vm._v(_vm._s(message.message))])
+                            ])
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "chat-input w-full px-4 mb-4" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "flex flex-row items-center h-16 rounded-xl px-4 bg-white"
+                  },
+                  [
+                    _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "\n                flex\n                items-center\n                justify-center\n                text-gray-400\n                hover:text-gray-600\n              "
+                        },
+                        [
                           _c(
                             "svg",
                             {
-                              staticClass: "w-4 h-4 transform rotate-45 -mt-px",
+                              staticClass: "w-5 h-5",
                               attrs: {
                                 fill: "none",
                                 stroke: "currentColor",
@@ -51740,19 +51761,113 @@ var render = function() {
                                   "stroke-linecap": "round",
                                   "stroke-linejoin": "round",
                                   "stroke-width": "2",
-                                  d: "M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                  d:
+                                    "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
                                 }
                               })
                             ]
                           )
-                        ])
-                      ]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex-grow ml-4" }, [
+                      _c("div", { staticClass: "relative w-full" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.message,
+                              expression: "message"
+                            }
+                          ],
+                          staticClass:
+                            "\n                  flex\n                  w-full\n                  border\n                  rounded-xl\n                  focus:outline-none\n                  focus:border-indigo-300\n                  pl-4\n                  h-10\n                ",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.message },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.sendMessage.apply(null, arguments)
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.message = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ml-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "\n                flex\n                items-center\n                justify-center\n                bg-indigo-500\n                hover:bg-indigo-600\n                rounded-xl\n                text-white\n                px-4\n                py-1\n                flex-shrink-0\n              ",
+                          attrs: {
+                            disabled: _vm.disableButton,
+                            type: "submit"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sendMessage.apply(null, arguments)
+                            }
+                          }
+                        },
+                        [
+                          _vm.sendingMessage
+                            ? _c("span", [_vm._v("Enviando...")])
+                            : _c("span", [_vm._v("Enviar")]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "ml-2" }, [
+                            _c(
+                              "svg",
+                              {
+                                staticClass:
+                                  "w-4 h-4 transform rotate-45 -mt-px",
+                                attrs: {
+                                  fill: "none",
+                                  stroke: "currentColor",
+                                  viewBox: "0 0 24 24",
+                                  xmlns: "http://www.w3.org/2000/svg"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d: "M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                  }
+                                })
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ]
+          )
         ])
       ])
     : _vm._e()
@@ -52291,7 +52406,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "\n          w-full\n          px-3\n          py-2\n          placeholder-gray-300\n          border border-gray-300\n          rounded-md\n          focus:outline-none\n          focus:ring focus:ring-indigo-100\n          focus:border-indigo-300\n          dark:bg-gray-700\n          dark:text-white\n          dark:placeholder-gray-500\n          dark:border-gray-600\n          dark:focus:ring-gray-900\n          dark:focus:border-gray-500\n        ",
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "text",
                 name: "name",
@@ -52330,7 +52445,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "\n          w-full\n          px-3\n          py-2\n          placeholder-gray-300\n          border border-gray-300\n          rounded-md\n          focus:outline-none\n          focus:ring focus:ring-indigo-100\n          focus:border-indigo-300\n          dark:bg-gray-700\n          dark:text-white\n          dark:placeholder-gray-500\n          dark:border-gray-600\n          dark:focus:ring-gray-900\n          dark:focus:border-gray-500\n        ",
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "text",
                 name: "email",
@@ -52356,7 +52471,7 @@ var render = function() {
             "button",
             {
               staticClass:
-                "\n        inline-flex\n        justify-center\n        py-2\n        px-4\n        border border-transparent\n        shadow-sm\n        text-sm\n        font-medium\n        rounded-md\n        text-white\n        bg-indigo-600\n        hover:bg-indigo-700\n        focus:outline-none\n        focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n      ",
+                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
               attrs: { type: "submit" },
               on: {
                 click: function($event) {
@@ -52365,7 +52480,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n                Atualizar\n            ")]
+            [_vm._v("\n        Atualizar\n      ")]
           )
         ])
       ]
@@ -52388,7 +52503,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                  "\n              px-3\n              py-2\n              placeholder-gray-300\n              border border-gray-300\n              rounded-md\n              focus:outline-none\n              focus:ring focus:ring-indigo-100\n              focus:border-indigo-300\n              dark:bg-gray-700\n              dark:text-white\n              dark:placeholder-gray-500\n              dark:border-gray-600\n              dark:focus:ring-gray-900\n              dark:focus:border-gray-500\n            ",
                 attrs: {
                   type: "checkbox",
                   name: "me_notify",
@@ -52432,24 +52547,14 @@ var render = function() {
                   ]
                 }
               }),
-              _vm._v(
-                "\n                    Receber Notificações?\n                "
-              )
+              _vm._v("\n          Receber Notificações?\n        ")
             ])
           ])
         ])
       ]
     ),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
+    _c(
       "div",
       { staticClass: "bg-white shadow sm:rounded-md sm:overflow-hidden" },
       [
@@ -52466,32 +52571,22 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("input", {
               staticClass:
-                "\n          w-full\n          px-3\n          py-2\n          placeholder-gray-300\n          border border-gray-300\n          rounded-md\n          focus:outline-none\n          focus:ring focus:ring-indigo-100\n          focus:border-indigo-300\n          dark:bg-gray-700\n          dark:text-white\n          dark:placeholder-gray-500\n          dark:border-gray-600\n          dark:focus:ring-gray-900\n          dark:focus:border-gray-500\n        ",
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "file",
-                name: "email_address",
-                id: "email_address",
-                autocomplete: "email"
-              }
+                name: "image_chat",
+                id: "image_chat",
+                autocomplete: "image_chat"
+              },
+              on: { change: _vm.updateBackgroundChat }
             })
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "px-4 py-3 bg-gray-50 text-right sm:px-6" }, [
-          _c(
-            "button",
-            {
-              staticClass:
-                "\n        inline-flex\n        justify-center\n        py-2\n        px-4\n        border border-transparent\n        shadow-sm\n        text-sm\n        font-medium\n        rounded-md\n        text-white\n        bg-indigo-600\n        hover:bg-indigo-700\n        focus:outline-none\n        focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n      ",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("\n                Atualizar Preferências\n            ")]
-          )
         ])
       ]
     )
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

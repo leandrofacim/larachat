@@ -70,7 +70,7 @@ export default {
 
         async updatePhotoProfile({ dispatch }, formData) {
             formData.append("_method", "PATCH");
-            return axios
+            return await axios
                 .post("api/v1/profile/update-image", formData, CONFIGS)
                 .then(response => dispatch("getMe"));
         },
@@ -82,9 +82,16 @@ export default {
         },
 
         async toogleNotify({ dispatch, state }) {
-            return axios.patch("api/v1/profile/update-preference", {
+            return await axios.patch("api/v1/profile/update-preference", {
                 me_notify: state.me.preference.me_notify
             });
+        },
+
+        async updateImageChat({ dispatch }, formData) {
+            formData.append("_method", "PATCH");
+            return await axios
+                .post("api/v1/profile/update-image-chat", formData, CONFIGS)
+                .then(response => dispatch('getMe'));
         }
     }
 };

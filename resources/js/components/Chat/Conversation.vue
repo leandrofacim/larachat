@@ -3,11 +3,29 @@
     <div class="chat-window__wrapper">
       <!-- chat header -->
       <div
-        class="chat-window__header bg-white px-6 py-2 h-20 flex md:items-center justify-between border-b-2 border-gray-200"
+        class="
+          chat-window__header
+          bg-white
+          px-6
+          py-2
+          h-20
+          flex
+          md:items-center
+          justify-between
+          border-b-2 border-gray-200
+        "
       >
         <div class="flex items-center space-x-4">
           <div
-            class="cursor-pointer lg:pointer-events-none rounded-full flex items-center hover:bg-gray-100 pl-2"
+            class="
+              cursor-pointer
+              lg:pointer-events-none
+              rounded-full
+              flex
+              items-center
+              hover:bg-gray-100
+              pl-2
+            "
           >
             <span class="lg:hidden text-gray-500">
               <svg
@@ -26,7 +44,11 @@
               </svg>
             </span>
             <img
-              :src="userConversation.photo !== '' ? userConversation.photo : '/images/no-photo.png'"
+              :src="
+                userConversation.photo !== ''
+                  ? userConversation.photo
+                  : '/images/no-photo.png'
+              "
               alt=""
               class="w-10 h-10 rounded-full"
             />
@@ -37,14 +59,29 @@
                 userConversation.name
               }}</span>
             </div>
-            <span class="text-sm text-muted">{{ userConversation.email }}r</span>
+            <span class="text-sm text-muted"
+              >{{ userConversation.email }}r</span
+            >
           </div>
         </div>
         <div class="flex items-center space-x-2">
           <button
             type="button"
             @click.prevent="toogleFavorite"
-            class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
+            class="
+              inline-flex
+              items-center
+              justify-center
+              rounded-full
+              h-10
+              w-10
+              transition
+              duration-500
+              ease-in-out
+              text-gray-500
+              hover:bg-gray-300
+              focus:outline-none
+            "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +89,10 @@
               viewBox="0 0 24 24"
               stroke="currentColor"
               class="h-6 w-6"
-              :class="{'fill-current text-red-600' :  userConversation !== null && userConversation.isMyFavorite}"
+              :class="{
+                'fill-current text-red-600':
+                  userConversation !== null && userConversation.isMyFavorite,
+              }"
             >
               <path
                 stroke-linecap="round"
@@ -64,19 +104,32 @@
           </button>
         </div>
       </div>
-      <div class="chat-window__messages-wrapper">
+      <div
+        class="chat-window__messages-wrapper"
+        :style="[
+          me.preference.image_background_chat
+            ? {
+                background: `center / 100% no-repeat url(${me.preference.image_background_chat})`,
+              }
+            : '',
+        ]"
+      >
         <!-- chat msgs  -->
         <div class="chat-window__messages-inner" ref="messages">
           <div class="chat-messages">
-            <div 
-              v-for="(message, index) in messages" 
+            <div
+              v-for="(message, index) in messages"
               :key="index"
               :class="[message.me ? 'my-message' : 'his-message']"
             >
               <div class="inner">
                 <div v-if="!message.me" class="profile">
                   <img
-                    :src="[message.sender.photo !== '' ? message.sender.photo : '/images/no-photo.png']"
+                    :src="[
+                      message.sender.photo !== ''
+                        ? message.sender.photo
+                        : '/images/no-photo.png',
+                    ]"
                     :alt="message.sender.name"
                     class="w-10 h-10 rounded-full"
                   />
@@ -93,7 +146,13 @@
           <div class="flex flex-row items-center h-16 rounded-xl px-4 bg-white">
             <div>
               <button
-                class="flex items-center justify-center text-gray-400 hover:text-gray-600"
+                class="
+                  flex
+                  items-center
+                  justify-center
+                  text-gray-400
+                  hover:text-gray-600
+                "
               >
                 <svg
                   class="w-5 h-5"
@@ -117,7 +176,16 @@
                   v-model="message"
                   v-on:keyup.enter="sendMessage"
                   type="text"
-                  class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                  class="
+                    flex
+                    w-full
+                    border
+                    rounded-xl
+                    focus:outline-none
+                    focus:border-indigo-300
+                    pl-4
+                    h-10
+                  "
                 />
               </div>
             </div>
@@ -126,7 +194,18 @@
                 :disabled="disableButton"
                 type="submit"
                 @click.prevent="sendMessage"
-                class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                class="
+                  flex
+                  items-center
+                  justify-center
+                  bg-indigo-500
+                  hover:bg-indigo-600
+                  rounded-xl
+                  text-white
+                  px-4
+                  py-1
+                  flex-shrink-0
+                "
               >
                 <span v-if="sendingMessage">Enviando...</span>
                 <span v-else>Enviar</span>
@@ -159,65 +238,62 @@
 import { mapActions, mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
-    computed: {
-        ...mapState({
-            userConversation: state => state.chat.userConversation,
-            messages: state => state.chat.messages,
-        }),
+  computed: {
+    ...mapState({
+      userConversation: (state) => state.chat.userConversation,
+      messages: (state) => state.chat.messages,
+      me: (state) => state.me.me,
+    }),
 
-        disableButton () {
-          return this.message.length < 1 || this.sendingMessage
-        }
+    disableButton() {
+      return this.message.length < 1 || this.sendingMessage;
+    },
+  },
+
+  data() {
+    return {
+      message: "",
+      sendingMessage: false,
+    };
+  },
+
+  methods: {
+    ...mapActions(["sendNewMessage", "setNewFavorite", "removeFavorite"]),
+
+    scrollMessages() {
+      setTimeout(() => {
+        this.$refs.messages.scroll({
+          top: this.$refs.messages.scrollHeight,
+          lef: 0,
+          behavior: "smooth",
+        });
+      }, 10);
     },
 
-    data() {
-      return {
-        message: '',
-        sendingMessage: false
-      }
+    sendMessage() {
+      if (this.disableButton) return;
+
+      this.sendingMessage = true;
+
+      this.sendNewMessage(this.message)
+        .then((response) => {
+          this.message = "";
+        })
+        .finally(() => (this.sendingMessage = false));
     },
 
-    methods: {
-      ...mapActions([
-        'sendNewMessage', 
-        'setNewFavorite', 
-        'removeFavorite'
-      ]),
-      
-      scrollMessages () {
-        setTimeout(() => {
-          this.$refs.messages.scroll({
-            top: this.$refs.messages.scrollHeight,
-            lef: 0,
-            behavior: 'smooth'
-          })
-        }, 10)
-      },
+    toogleFavorite() {
+      if (this.userConversation.isMyFavorite)
+        return this.removeFavorite(this.userConversation);
 
-      sendMessage () {
-        if (this.disableButton) return;
-        
-        this.sendingMessage = true;
-
-        this.sendNewMessage(this.message)
-          .then(response => {
-            this.message = '';
-          })
-          .finally(() => this.sendingMessage = false)
-      },
-
-     toogleFavorite() {
-        if (this.userConversation.isMyFavorite)
-            return this.removeFavorite(this.userConversation)
-            
-        return this.setNewFavorite(this.userConversation)
-      }
+      return this.setNewFavorite(this.userConversation);
     },
+  },
 
-    watch: {
-      messages () {
-        this.scrollMessages()
-      }
-    }
+  watch: {
+    messages() {
+      this.scrollMessages();
+    },
+  },
 };
 </script>
