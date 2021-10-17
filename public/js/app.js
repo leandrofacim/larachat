@@ -2827,6 +2827,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
@@ -2834,7 +2866,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.me.me;
     }
   })),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["updatePhotoProfile", "update", "toogleNotify", "updateImageChat"])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["updatePhotoProfile", "update", "toogleNotify", "updateImageChat", "removeImageChat"])), {}, {
     updatePhoto: function updatePhoto(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (files.length === 0) return;
@@ -3210,51 +3242,22 @@ var CONFIGS = {
   },
   actions: {
     getMyFavorites: function getMyFavorites(_ref) {
-      var commit = _ref.commit;
-      return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/favorites").then(function (response) {
-        return commit("SET_MY_FAVORITES", response.data.data);
-      });
-    },
-    setNewFavorite: function setNewFavorite(_ref2, user) {
-      var commit = _ref2.commit,
-          dispatch = _ref2.dispatch,
-          state = _ref2.state;
-      return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/v1/favorites", {
-        user: user.id
-      }).then(function (response) {
-        commit("SET_USER_FAVORITE", user);
-        if (state.favorites.length > 0) dispatch("getMyFavorites");
-      });
-    },
-    removeFavorite: function removeFavorite(_ref3, user) {
-      var commit = _ref3.commit,
-          dispatch = _ref3.dispatch,
-          state = _ref3.state;
-      return axios__WEBPACK_IMPORTED_MODULE_1___default().delete("/api/v1/favorites", {
-        data: {
-          user: user.id
-        }
-      }).then(function (response) {
-        commit("REMOVE_USER_FAVORITE", user);
-        if (state.favorites.length > 0) dispatch("getMyFavorites");
-      });
-    },
-    getMe: function getMe(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, response;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref4.commit;
+                commit = _ref.commit;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/v1/me");
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/favorites").then(function (response) {
+                  return commit("SET_MY_FAVORITES", response.data.data);
+                });
 
               case 3:
-                response = _context.sent;
-                return _context.abrupt("return", commit("SET_ME", response.data.data));
+                return _context.abrupt("return", _context.sent);
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -3262,24 +3265,26 @@ var CONFIGS = {
         }, _callee);
       }))();
     },
-    updatePhotoProfile: function updatePhotoProfile(_ref5, formData) {
+    setNewFavorite: function setNewFavorite(_ref2, user) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch;
+        var commit, dispatch, state;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref5.dispatch;
-                formData.append("_method", "PATCH");
-                _context2.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image", formData, CONFIGS).then(function (response) {
-                  return dispatch("getMe");
+                commit = _ref2.commit, dispatch = _ref2.dispatch, state = _ref2.state;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/v1/favorites", {
+                  user: user.id
+                }).then(function (response) {
+                  commit("SET_USER_FAVORITE", user);
+                  if (state.favorites.length > 0) dispatch("getMyFavorites");
                 });
 
-              case 4:
+              case 3:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -3287,17 +3292,22 @@ var CONFIGS = {
         }, _callee2);
       }))();
     },
-    update: function update(_ref6, formData) {
+    removeFavorite: function removeFavorite(_ref3, user) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var dispatch;
+        var commit, dispatch, state;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                dispatch = _ref6.dispatch;
+                commit = _ref3.commit, dispatch = _ref3.dispatch, state = _ref3.state;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update", _objectSpread({}, formData)).then(function (response) {
-                  return dispatch("getMe");
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().delete("/api/v1/favorites", {
+                  data: {
+                    user: user.id
+                  }
+                }).then(function (response) {
+                  commit("REMOVE_USER_FAVORITE", user);
+                  if (state.favorites.length > 0) dispatch("getMyFavorites");
                 });
 
               case 3:
@@ -3311,23 +3321,22 @@ var CONFIGS = {
         }, _callee3);
       }))();
     },
-    toogleNotify: function toogleNotify(_ref7) {
+    getMe: function getMe(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var dispatch, state;
+        var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                dispatch = _ref7.dispatch, state = _ref7.state;
+                commit = _ref4.commit;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update-preference", {
-                  me_notify: state.me.preference.me_notify
-                });
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/v1/me");
 
               case 3:
-                return _context4.abrupt("return", _context4.sent);
+                response = _context4.sent;
+                return _context4.abrupt("return", commit("SET_ME", response.data.data));
 
-              case 4:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -3335,18 +3344,18 @@ var CONFIGS = {
         }, _callee4);
       }))();
     },
-    updateImageChat: function updateImageChat(_ref8, formData) {
+    updatePhotoProfile: function updatePhotoProfile(_ref5, formData) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var dispatch;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                dispatch = _ref8.dispatch;
+                dispatch = _ref5.dispatch;
                 formData.append("_method", "PATCH");
                 _context5.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image-chat", formData, CONFIGS).then(function (response) {
-                  return dispatch('getMe');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image", formData, CONFIGS).then(function (response) {
+                  return dispatch("getMe");
                 });
 
               case 4:
@@ -3358,6 +3367,103 @@ var CONFIGS = {
             }
           }
         }, _callee5);
+      }))();
+    },
+    update: function update(_ref6, formData) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        var dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                dispatch = _ref6.dispatch;
+                _context6.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update", _objectSpread({}, formData)).then(function (response) {
+                  return dispatch("getMe");
+                });
+
+              case 3:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    toogleNotify: function toogleNotify(_ref7) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        var dispatch, state;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                dispatch = _ref7.dispatch, state = _ref7.state;
+                _context7.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/v1/profile/update-preference", {
+                  me_notify: state.me.preference.me_notify
+                });
+
+              case 3:
+                return _context7.abrupt("return", _context7.sent);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    updateImageChat: function updateImageChat(_ref8, formData) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+        var dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                dispatch = _ref8.dispatch;
+                formData.append("_method", "PATCH");
+                _context8.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/update-image-chat", formData, CONFIGS).then(function (response) {
+                  return dispatch("getMe");
+                });
+
+              case 4:
+                return _context8.abrupt("return", _context8.sent);
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
+    },
+    removeImageChat: function removeImageChat(_ref9) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+        var dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                dispatch = _ref9.dispatch;
+                _context9.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/v1/profile/remove-image-chat").then(function (response) {
+                  return dispatch("getMe");
+                });
+
+              case 3:
+                return _context9.abrupt("return", _context9.sent);
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
       }))();
     }
   }
@@ -52406,7 +52512,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring\n            focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "text",
                 name: "name",
@@ -52445,7 +52551,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring\n            focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "text",
                 name: "email",
@@ -52471,7 +52577,7 @@ var render = function() {
             "button",
             {
               staticClass:
-                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500\n        ",
+                "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2\n          focus:ring-offset-2\n          focus:ring-indigo-500\n        ",
               attrs: { type: "submit" },
               on: {
                 click: function($event) {
@@ -52503,7 +52609,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "\n              px-3\n              py-2\n              placeholder-gray-300\n              border border-gray-300\n              rounded-md\n              focus:outline-none\n              focus:ring focus:ring-indigo-100\n              focus:border-indigo-300\n              dark:bg-gray-700\n              dark:text-white\n              dark:placeholder-gray-500\n              dark:border-gray-600\n              dark:focus:ring-gray-900\n              dark:focus:border-gray-500\n            ",
+                  "\n              px-3\n              py-2\n              placeholder-gray-300\n              border border-gray-300\n              rounded-md\n              focus:outline-none\n              focus:ring\n              focus:ring-indigo-100\n              focus:border-indigo-300\n              dark:bg-gray-700\n              dark:text-white\n              dark:placeholder-gray-500\n              dark:border-gray-600\n              dark:focus:ring-gray-900\n              dark:focus:border-gray-500\n            ",
                 attrs: {
                   type: "checkbox",
                   name: "me_notify",
@@ -52571,7 +52677,7 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               staticClass:
-                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
+                "\n            w-full\n            px-3\n            py-2\n            placeholder-gray-300\n            border border-gray-300\n            rounded-md\n            focus:outline-none\n            focus:ring\n            focus:ring-indigo-100\n            focus:border-indigo-300\n            dark:bg-gray-700\n            dark:text-white\n            dark:placeholder-gray-500\n            dark:border-gray-600\n            dark:focus:ring-gray-900\n            dark:focus:border-gray-500\n          ",
               attrs: {
                 type: "file",
                 name: "image_chat",
@@ -52581,7 +52687,31 @@ var render = function() {
               on: { change: _vm.updateBackgroundChat }
             })
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.me.preference.background_chat
+          ? _c(
+              "div",
+              { staticClass: "px-4 py-3 bg-gray-50 text-right sm:px-6" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "\n          inline-flex\n          justify-center\n          py-2\n          px-4\n          border border-transparent\n          shadow-sm\n          text-sm\n          font-medium\n          rounded-md\n          text-white\n          bg-indigo-600\n          hover:bg-indigo-700\n          focus:outline-none\n          focus:ring-2\n          focus:ring-offset-2\n          focus:ring-indigo-500\n        ",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.removeImageChat.apply(null, arguments)
+                      }
+                    }
+                  },
+                  [_vm._v("\n        Remover Imagem do Chat\n      ")]
+                )
+              ]
+            )
+          : _vm._e()
       ]
     )
   ])

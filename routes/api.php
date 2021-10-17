@@ -17,6 +17,7 @@ Route::prefix('v1')
         Route::post('logout', [ProfileApiController::class, 'logout']);
 
         Route::patch('profile/update-image-chat', [ProfileApiController::class, 'updatePreferenceImageChat']);
+        Route::patch('profile/remove-image-chat', [ProfileApiController::class, 'removeImageChat']);
         Route::patch('profile/update-preference', [ProfileApiController::class, 'updatePreference']);
         Route::patch('profile/update-image', [ProfileApiController::class, 'uploadPhoto']);
         Route::patch('profile/update', [ProfileApiController::class, 'update']);

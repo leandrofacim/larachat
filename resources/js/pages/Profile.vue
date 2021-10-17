@@ -45,7 +45,8 @@
               border border-gray-300
               rounded-md
               focus:outline-none
-              focus:ring focus:ring-indigo-100
+              focus:ring
+              focus:ring-indigo-100
               focus:border-indigo-300
               dark:bg-gray-700
               dark:text-white
@@ -76,7 +77,8 @@
               border border-gray-300
               rounded-md
               focus:outline-none
-              focus:ring focus:ring-indigo-100
+              focus:ring
+              focus:ring-indigo-100
               focus:border-indigo-300
               dark:bg-gray-700
               dark:text-white
@@ -107,7 +109,9 @@
             bg-indigo-600
             hover:bg-indigo-700
             focus:outline-none
-            focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+            focus:ring-2
+            focus:ring-offset-2
+            focus:ring-indigo-500
           "
         >
           Atualizar
@@ -133,7 +137,8 @@
                 border border-gray-300
                 rounded-md
                 focus:outline-none
-                focus:ring focus:ring-indigo-100
+                focus:ring
+                focus:ring-indigo-100
                 focus:border-indigo-300
                 dark:bg-gray-700
                 dark:text-white
@@ -171,7 +176,8 @@
               border border-gray-300
               rounded-md
               focus:outline-none
-              focus:ring focus:ring-indigo-100
+              focus:ring
+              focus:ring-indigo-100
               focus:border-indigo-300
               dark:bg-gray-700
               dark:text-white
@@ -182,6 +188,32 @@
             "
           />
         </div>
+      </div>
+      <div v-if="me.preference.background_chat" class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <button
+          @click.prevent="removeImageChat"
+          type="submit"
+          class="
+            inline-flex
+            justify-center
+            py-2
+            px-4
+            border border-transparent
+            shadow-sm
+            text-sm
+            font-medium
+            rounded-md
+            text-white
+            bg-indigo-600
+            hover:bg-indigo-700
+            focus:outline-none
+            focus:ring-2
+            focus:ring-offset-2
+            focus:ring-indigo-500
+          "
+        >
+          Remover Imagem do Chat
+        </button>
       </div>
     </div>
   </div>
@@ -203,6 +235,7 @@ export default {
       "update",
       "toogleNotify",
       "updateImageChat",
+      "removeImageChat"
     ]),
 
     updatePhoto(e) {

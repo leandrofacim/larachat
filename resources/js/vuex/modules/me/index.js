@@ -31,16 +31,16 @@ export default {
     },
 
     actions: {
-        getMyFavorites({ commit }) {
-            return axios
+        async getMyFavorites({ commit }) {
+            return await axios
                 .get("/api/v1/favorites")
                 .then(response =>
                     commit("SET_MY_FAVORITES", response.data.data)
                 );
         },
 
-        setNewFavorite({ commit, dispatch, state }, user) {
-            return axios
+        async setNewFavorite({ commit, dispatch, state }, user) {
+            return await axios
                 .post("/api/v1/favorites", { user: user.id })
                 .then(response => {
                     commit("SET_USER_FAVORITE", user);
@@ -49,8 +49,8 @@ export default {
                 });
         },
 
-        removeFavorite({ commit, dispatch, state }, user) {
-            return axios
+        async removeFavorite({ commit, dispatch, state }, user) {
+            return await axios
                 .delete("/api/v1/favorites", {
                     data: {
                         user: user.id
@@ -91,7 +91,13 @@ export default {
             formData.append("_method", "PATCH");
             return await axios
                 .post("api/v1/profile/update-image-chat", formData, CONFIGS)
-                .then(response => dispatch('getMe'));
+                .then(response => dispatch("getMe"));
+        },
+
+        async removeImageChat({ dispatch }) {
+            return await axios
+                .post("api/v1/profile/remove-image-chat")
+                .then(response => dispatch("getMe"));
         }
     }
 };
